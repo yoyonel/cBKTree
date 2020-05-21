@@ -117,12 +117,7 @@ cdef class CPP_BkHammingTree(object):
 		cdef BK_Tree *root_ptr = self.treeroot_p
 		with nogil:
 			ret = root_ptr.get_all()
-		extracted = []
-		deq_sz = ret.size()
-		for x in range(deq_sz):
-			if ret[x].first != 0 or ret[x].second != 0:
-				extracted.append((ret[x].first, ret[x].second))
-		return extracted
+		return [(node.first, node.second) for node in ret if node.first != 0 or node.second != 0]
 
 	cpdef clear_tree(self):
 		ret = self.treeroot_p.clear_tree()
